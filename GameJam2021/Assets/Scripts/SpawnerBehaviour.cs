@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class SpawnerBehaviour : MonoBehaviour
 {
-    private float delayAndSpawnRate = 2.0f;
-    private float timeUntilSpawnRateIncrease = 30.0f;
+    public float delayAndSpawnRate = 2.0f;
+    public float timeUntilSpawnRateIncrease = 30.0f;
 
     [SerializeField] private List<GameObject> m_EnemyPrefabs;
+
+    void Start()
+    {
+        StartCoroutine(SpawnObject(delayAndSpawnRate));
+    }
 
     private void SpawnRandomEnemyAtPosition(Vector3 spawnPoint)
     {
@@ -17,15 +22,11 @@ public class SpawnerBehaviour : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        StartCoroutine(SpawnObject(delayAndSpawnRate));
-    }
-
     IEnumerator SpawnObject(float firstDelay)
     {
         float spawnRateCountdown = timeUntilSpawnRateIncrease;
         float spawnCountdown = firstDelay;
+
         while (true)
         {
             yield return null;
@@ -38,7 +39,6 @@ public class SpawnerBehaviour : MonoBehaviour
                 SpawnRandomEnemyAtPosition(transform.localPosition);
             }
 
-            // Should the spawn rate increase?
             if (spawnRateCountdown < 0 && delayAndSpawnRate > 1)
             {
                 spawnRateCountdown += timeUntilSpawnRateIncrease;
