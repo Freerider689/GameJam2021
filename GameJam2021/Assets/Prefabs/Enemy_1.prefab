@@ -45,8 +45,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
+  armor: 5
+  speed: 1
+  healthDamageAtInterval: 0
+  healthGainAtInterval: 0
   value: 1
-  speed: 0
+  isFrozen: 0
+  isSlowed: 0
+  isPoisoned: 0
+  isStunned: 0
+  isBurning: 0
+  isHealing: 0
 --- !u!1 &8154841933885108041
 GameObject:
   m_ObjectHideFlags: 0
