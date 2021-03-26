@@ -15,14 +15,6 @@ public class BaseEnemyBehaviour : MonoBehaviour
     public float healthGainAtInterval = 0.0f;
     public int valueForKill = 1;
 
-
-    public Boolean isFrozen = false;
-    public Boolean isSlowed= false;
-    public Boolean isPoisoned = false;
-    public Boolean isStunned = false;
-    public Boolean isBurning = false;
-    public Boolean isHealing = false;
-
     private HashSet<StatusEffectEnum> m_currentStatusEffects;
 
     void Update()
@@ -32,8 +24,6 @@ public class BaseEnemyBehaviour : MonoBehaviour
         {
             transform.localPosition = hit.point;
         }
-
-        var x = setFrozen(-_baseSpeed, _baseArmor, 1);
     }
 
     public void revertBackToNormal()
@@ -43,6 +33,11 @@ public class BaseEnemyBehaviour : MonoBehaviour
         armor = _baseArmor;
     }
 
+
+    public void registerHit()
+    {
+        Debug.Log("Captain I'm hit!");
+    }
 
     public IEnumerator setFrozen(float speedModifier, int armorModifier, float effectDuration)
     {
@@ -101,7 +96,8 @@ public class BaseEnemyBehaviour : MonoBehaviour
         m_currentStatusEffects.Remove(StatusEffectEnum.HEALING);
     }
 
-    private enum StatusEffectEnum
+    [System.Serializable]
+    public enum StatusEffectEnum
     {
         FROZEN,
         STUN,

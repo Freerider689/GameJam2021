@@ -7,6 +7,9 @@ public abstract class Projectile : MonoBehaviour
     private Transform _target;
 
     public float speed;
+    public DamageTypeEnum damageType;
+    public float targetSpeedModifier = 0.0f;
+    public int targetArmorModifier = 0;
 
     public void Seek(Transform target)
     {
@@ -39,5 +42,27 @@ public abstract class Projectile : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    public void OnCollisionEnter(Collision other)
+    {
+        Debug.Log("Collision detected");
+        if (other.gameObject.tag == "Enemy")
+        {
+            var myScript = other.gameObject.GetComponent<BaseEnemyBehaviour>();
+            myScript.registerHit();
+        }
+
+    }
+
+    [System.Serializable]
+    public enum DamageTypeEnum
+    {
+        NORMAL,
+        ICE,
+        STUN,
+        SLOW,
+        POISON,
+        FIRE
+    };
 
 }

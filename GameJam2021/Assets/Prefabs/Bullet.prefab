@@ -109,3 +109,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 30
+  damageType: 0
+  targetSpeedModifier: 0
+  targetArmorModifier: 0
