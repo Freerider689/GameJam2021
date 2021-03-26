@@ -22,6 +22,7 @@ public abstract class Projectile : MonoBehaviour
         }
 
         Vector3 direction = _target.localPosition - transform.localPosition;
+        direction.y += _target.localScale.y;
 
         float distanceThisFrame = speed * Time.deltaTime;
 
