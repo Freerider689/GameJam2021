@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6675344792205566642}
   - component: {fileID: 4320628138743999630}
+  - component: {fileID: 1379486764051998525}
   m_Layer: 0
   m_Name: Enemy_1
   m_TagString: Enemy
@@ -44,10 +45,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dbd55cf2cea5cc4d938c98cc0f5f760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
-  value: 1
   path: {fileID: 0}
-  speed: 10
+  health: 10
+  armor: 5
+  speed: 20
+  healthDamageAtInterval: 0
+  healthGainAtInterval: 0
+  valueForKill: 1
+--- !u!114 &1379486764051998525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8057965386123252245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5910ec8f443dbbb4686df2fcc54290ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8154841933885108041
 GameObject:
   m_ObjectHideFlags: 0
