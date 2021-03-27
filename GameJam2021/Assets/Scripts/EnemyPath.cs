@@ -54,6 +54,21 @@ public class EnemyPath : MonoBehaviour
         m_WayPoints = new List<PathWaypoint>(GetComponentsInChildren<PathWaypoint>());
     }
 
+    public PathWaypoint GetNextWaypoint(PathWaypoint currentWaypoint = null)
+    {
+        if (m_WayPoints == null || m_WayPoints.Count == 0) return null;
+        if (currentWaypoint == null) return m_WayPoints[0];
+        for (int i = 0; i < m_WayPoints.Count; i++)
+        {
+            if (m_WayPoints[i] == currentWaypoint)
+            {
+                if (i + 1 == m_WayPoints.Count) return null;
+                return m_WayPoints[i + 1];
+            }
+        }
+        return null;
+    }
+
     private void DrawGizmos()
     {
         Gizmos.color = gizmosColor;
