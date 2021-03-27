@@ -49,19 +49,19 @@ public abstract class Projectile : MonoBehaviour
             switch (damageType)
             {
                 case DamageTypeEnum.ICE:
-                    StartCoroutine(myScript.setFrozen(-1.0f, 5, 2));
+                    StartCoroutine(myScript.setFrozen(-1.0f, 2, 2.0f));
                     break;             
                 case DamageTypeEnum.STUN:
-                    StartCoroutine(myScript.setStun(0.2f));
+                    StartCoroutine(myScript.setStun(2.0f));
                     break;
                 case DamageTypeEnum.SLOW:
-                    StartCoroutine(myScript.setSlowed(-1.0f, 0.2f));
+                    StartCoroutine(myScript.setSlowed(-10.0f, 2.0f));
                     break;
                 case DamageTypeEnum.FIRE:
-                    StartCoroutine(myScript.setBurn(-5, 0.2f));
+                    StartCoroutine(myScript.setBurn(-1, 2.0f));
                     break;
                 case DamageTypeEnum.POISON:
-                    StartCoroutine(myScript.setPoison(-1.0f, -5, 0.2f));
+                    StartCoroutine(myScript.setPoison(-1.0f, -1, 0.2f));
                     break;
             }
         }

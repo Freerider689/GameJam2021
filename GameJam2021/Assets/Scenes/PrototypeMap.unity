@@ -337,7 +337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e53eb9ab6a3e9643b4b76bb458f27d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayAndSpawnRate: 1
+  delayAndSpawnRate: 0.25
   timeUntilSpawnRateIncrease: 30
   gizmosColor: {r: 0, g: 0, b: 1, a: 1}
   alwaysDrawGizmos: 1
@@ -6672,7 +6672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4946ad14f5a4a1140b70ad77036a4757, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  health: 1000
   money: 10
   level: 1
 --- !u!1 &1317990051

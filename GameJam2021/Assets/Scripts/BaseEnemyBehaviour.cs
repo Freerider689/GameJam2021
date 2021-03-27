@@ -5,8 +5,8 @@ using UnityEngine;
 public class BaseEnemyBehaviour : MonoBehaviour
 {
     private static readonly float _baseHealth = 10.0f;
-    private static readonly float _baseSpeed = 1.0f;
-    private static readonly int _baseArmor = 5;
+    private static readonly float _baseSpeed = 20.0f;
+    private static readonly int _baseArmor = 1;
 
     public EnemyPath path;
 
@@ -27,6 +27,11 @@ public class BaseEnemyBehaviour : MonoBehaviour
             transform.localPosition = hit.point;
         }
 
+        if (healthDamageAtInterval < 0)
+        {
+            registerHit(healthDamageAtInterval);
+        }
+
         if (path != null)
         {
             UpdatePathMovement();
@@ -42,18 +47,20 @@ public class BaseEnemyBehaviour : MonoBehaviour
 
     public void registerHit(float damage)
     {
-        Debug.Log($"Captain I'm hit with damage {damage}! {health}/{10.0f}");
-        health -= damage;
+      
+            Debug.Log($"Captain I'm hit with damage {damage}! {health}/{10.0f}");
+            health -= Math.Abs(damage);
 
-        if (health <= 0)
-        {
-            Debug.Log("Mein Leben #_#");
-            var player = GameObject.FindWithTag("Player").gameObject.GetComponent<PlayerBase>();
-            
-            player.addMoney(this.valueForKill);
+            if (health <= 0)
+            {
+                Debug.Log("Mein Leben #_#");
+                var player = GameObject.FindWithTag("Player").gameObject.GetComponent<PlayerBase>();
 
-            Destroy(gameObject);
-        }
+                player.addMoney(this.valueForKill);
+
+                Destroy(gameObject);
+            }
+        
     }
 
     IEnumerator statusTimer(float time, Action callback)
@@ -67,7 +74,7 @@ public class BaseEnemyBehaviour : MonoBehaviour
         callback();
     }
 
-    public IEnumerator setFrozen(float speedModifier, int armorModifier, int effectDuration)
+    public IEnumerator setFrozen(float speedModifier, int armorModifier, float effectDuration)
     {
         Debug.Log($"Enemy frozen for {effectDuration}s");
         speed += speedModifier;
@@ -84,12 +91,19 @@ public class BaseEnemyBehaviour : MonoBehaviour
     public IEnumerator setSlowed(float speedModifier, float effectDuration)
     {
         Debug.Log("Enemy slowed");
-        speed += speedModifier;
+        if (speed - speedModifier >= 0)
+        {
+            speed += speedModifier;
+        }
+        else
+        {
+            speed = 0.0f;
+        }
 
         yield return StartCoroutine(statusTimer(effectDuration, () =>
         {
             Debug.Log("Enemy speed normal");
-            speed -= speedModifier;
+            speed = _baseSpeed;
         }));
     }
 
@@ -130,19 +144,7 @@ public class BaseEnemyBehaviour : MonoBehaviour
             this.healthDamageAtInterval -= damageAtTick;
         }));
     }
-
-    public IEnumerator setHealing(float healthGainAtInterval, float effectDuration)
-    {
-        Debug.Log("Enemy healing");
-        this.healthGainAtInterval += healthGainAtInterval;
-
-        yield return StartCoroutine(statusTimer(effectDuration, () =>
-        {
-            Debug.Log("Enemy no longer healing"); 
-            this.healthGainAtInterval -= healthGainAtInterval;
-        }));
-    }
-
+    
     private void UpdatePathMovement()
     {
         if (m_CurrentWaypoint == null)

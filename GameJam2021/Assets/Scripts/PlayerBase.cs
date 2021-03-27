@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerBase : MonoBehaviour
 {
-    private static readonly int _baseHealth = 10;
+    private static readonly int _baseHealth = 1_000;
     public int health = _baseHealth;
     public int money = 10;
     public int level = 1;
