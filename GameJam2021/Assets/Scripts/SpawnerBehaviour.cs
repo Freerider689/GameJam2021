@@ -7,6 +7,11 @@ public class SpawnerBehaviour : MonoBehaviour
     public float delayAndSpawnRate = 2.0f;
     public float timeUntilSpawnRateIncrease = 30.0f;
 
+    public Color gizmosColor = Color.blue;
+    public bool alwaysDrawGizmos = true;
+
+    public EnemyPath path;
+
     [SerializeField] private List<GameObject> m_EnemyPrefabs;
 
     void Start()
@@ -18,7 +23,9 @@ public class SpawnerBehaviour : MonoBehaviour
     {
         if (m_EnemyPrefabs.Count > 0)
         {
-            GameObject enemy = Instantiate(m_EnemyPrefabs[0], spawnPoint, Quaternion.identity);
+            GameObject enemyObject = Instantiate(m_EnemyPrefabs[0], spawnPoint, Quaternion.identity);
+            BaseEnemyBehaviour enemy = enemyObject.GetComponent<BaseEnemyBehaviour>();
+            enemy.path = path;
         }
     }
 
@@ -45,5 +52,27 @@ public class SpawnerBehaviour : MonoBehaviour
                 delayAndSpawnRate -= 0.1f;
             }
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (alwaysDrawGizmos)
+        {
+            DrawGizmos();
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (!alwaysDrawGizmos)
+        {
+            DrawGizmos();
+        }
+    }
+
+    private void DrawGizmos()
+    {
+        Gizmos.color = gizmosColor;
+        Gizmos.DrawSphere(transform.position, 1f);
     }
 }

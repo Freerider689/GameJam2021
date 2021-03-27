@@ -8,6 +8,15 @@ public class BaseEnemyBehaviour : MonoBehaviour
     private static readonly float _baseSpeed = 2.0f;
     private static readonly int _baseArmor = 5;
 
+    public EnemyPath path;
+
+    public float speed = 1.0f;
+
+    private PathWaypoint m_CurrentWaypoint;
+
+    void Start()
+    {
+    }
     public float health = 10.0f;
     public int armor = _baseArmor;
     public float speed = _baseSpeed;
@@ -129,5 +138,31 @@ public class BaseEnemyBehaviour : MonoBehaviour
             Debug.Log("Enemy no longer healing"); 
             this.healthGainAtInterval -= healthGainAtInterval;
         })); 
+
+        if (path != null)
+        {
+            UpdatePathMovement();
+        }
+    }
+
+    private void UpdatePathMovement()
+    {
+        if (m_CurrentWaypoint == null)
+        {
+            m_CurrentWaypoint = path.GetNextWaypoint();
+            if (m_CurrentWaypoint == null) return;
+        }
+
+        Vector3 movement = Vector3.MoveTowards(transform.localPosition, m_CurrentWaypoint.gameObject.transform.position, Time.deltaTime * speed);
+        transform.localPosition = movement;
+
+        Vector3 objectPositionNoY = new Vector3(transform.position.x, 0f, transform.position.z);
+        Vector3 waypointPositionNoY = new Vector3(m_CurrentWaypoint.transform.position.x, 0f, m_CurrentWaypoint.transform.position.z);
+
+        float delta = Vector3.Distance(objectPositionNoY, waypointPositionNoY);
+        if (delta < 0.1f)
+        {
+            m_CurrentWaypoint = path.GetNextWaypoint(m_CurrentWaypoint);
+        }
     }
 }
