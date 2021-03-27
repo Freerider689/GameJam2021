@@ -2,8 +2,8 @@
     <ui:VisualElement name="Root" style="align-items: stretch; justify-content: space-between; width: 100%; height: 100%;">
         <ui:VisualElement />
         <ui:VisualElement name="BuildMenu" style="opacity: 1; height: auto; justify-content: flex-start; flex-direction: row; overflow: hidden; bottom: auto; padding-bottom: 10px; padding-left: 10px; padding-right: 10px;">
-            <ui:Button text="Simple Tower&#10;" display-tooltip-when-elided="true" name="Tower1" style="width: 100px; height: 100px; background-color: rgb(161, 0, 0); opacity: 1;" />
-            <ui:Button text="Fast Tower&#10;" display-tooltip-when-elided="true" name="Tower2" style="width: 100px; height: 100px; background-color: rgb(161, 0, 0); opacity: 1;" />
+            <ui:Button text="Simple Tower&#10; 10" display-tooltip-when-elided="true" name="Tower1" style="width: 100px; height: 100px; background-color: rgb(161, 0, 0); opacity: 1;" />
+            <ui:Button text="Fast Tower&#10;20&#10;" display-tooltip-when-elided="true" name="Tower2" style="width: 100px; height: 100px; background-color: rgb(161, 0, 0); opacity: 1;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
