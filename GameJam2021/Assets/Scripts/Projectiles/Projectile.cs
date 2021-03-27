@@ -7,9 +7,10 @@ public abstract class Projectile : MonoBehaviour
     private Transform _target;
 
     public float speed;
-    public DamageTypeEnum damageType;
     public float targetSpeedModifier = 0.0f;
     public int targetArmorModifier = 0;
+
+    private DamageTypeEnum damageType = DamageTypeEnum.NORMAL;
 
     public void Seek(Transform target)
     {
@@ -40,18 +41,40 @@ public abstract class Projectile : MonoBehaviour
 
     public void HitTarget()
     {
+        if (_target.gameObject.tag == "Enemy")
+        {
+            var myScript = _target.gameObject.GetComponent<BaseEnemyBehaviour>();
+
+            switch (damageType)
+            {
+                case DamageTypeEnum.ICE:
+                    StartCoroutine(myScript.setFrozen(-1.0f, 5, 2));
+                    break;             
+                case DamageTypeEnum.STUN:
+                    StartCoroutine(myScript.setStun(0.2f));
+                    break;
+                case DamageTypeEnum.SLOW:
+                    StartCoroutine(myScript.setSlowed(-1.0f, 0.2f));
+                    break;
+                case DamageTypeEnum.FIRE:
+                    StartCoroutine(myScript.setBurn(-5, 0.2f));
+                    break;
+                case DamageTypeEnum.POISON:
+                    StartCoroutine(myScript.setPoison(-1.0f, -5, 0.2f));
+                    break;
+                default:
+                    myScript.registerHit();
+                    break;
+            }
+        }
+
         Destroy(gameObject);
     }
 
-    public void OnCollisionEnter(Collision other)
-    {
-        Debug.Log("Collision detected");
-        if (other.gameObject.tag == "Enemy")
-        {
-            var myScript = other.gameObject.GetComponent<BaseEnemyBehaviour>();
-            myScript.registerHit();
-        }
 
+    public void setDamageType(DamageTypeEnum newDamageType)
+    {
+        this.damageType = newDamageType;
     }
 
     [System.Serializable]

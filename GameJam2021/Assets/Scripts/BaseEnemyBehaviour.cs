@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class BaseEnemyBehaviour : MonoBehaviour
@@ -15,8 +16,6 @@ public class BaseEnemyBehaviour : MonoBehaviour
     public float healthGainAtInterval = 0.0f;
     public int valueForKill = 1;
 
-    private HashSet<StatusEffectEnum> m_currentStatusEffects;
-
     void Update()
     {
         RaycastHit hit;
@@ -28,7 +27,6 @@ public class BaseEnemyBehaviour : MonoBehaviour
 
     public void revertBackToNormal()
     {
-        m_currentStatusEffects = new HashSet<StatusEffectEnum>();
         speed = _baseSpeed;
         armor = _baseArmor;
     }
@@ -39,71 +37,90 @@ public class BaseEnemyBehaviour : MonoBehaviour
         Debug.Log("Captain I'm hit!");
     }
 
-    public IEnumerator setFrozen(float speedModifier, int armorModifier, float effectDuration)
+    IEnumerator statusTimer(float time, Action callback)
     {
-        Debug.Log("Freezer");
-        if (!m_currentStatusEffects.Add(StatusEffectEnum.FROZEN)) yield break;
+        float timer = 0;
+        while (timer < time)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        callback();
+    }
+
+    public IEnumerator setFrozen(float speedModifier, int armorModifier, int effectDuration)
+    {
+        Debug.Log($"Enemy frozen for {effectDuration}s");
         speed += speedModifier;
         armor += armorModifier;
-        yield return new WaitForSeconds(effectDuration);
-        speed -= speedModifier;
-        armor -= armorModifier;
-        m_currentStatusEffects.Remove(StatusEffectEnum.FROZEN);
+
+        yield return StartCoroutine(statusTimer(effectDuration, () =>
+        {
+            Debug.Log("Enemy unfrozen");
+            speed -= speedModifier;
+            armor -= armorModifier;
+        }));
     }
 
     public IEnumerator setSlowed(float speedModifier, float effectDuration)
     {
-        if (!m_currentStatusEffects.Add(StatusEffectEnum.SLOWED)) yield break;
+        Debug.Log("Enemy slowed");
         speed += speedModifier;
-        yield return new WaitForSeconds(effectDuration);
-        speed -= speedModifier;
-        m_currentStatusEffects.Remove(StatusEffectEnum.SLOWED);
+
+        yield return StartCoroutine(statusTimer(effectDuration, () =>
+        {
+            Debug.Log("Enemy speed normal");
+            speed -= speedModifier;
+        }));
     }
 
-    public IEnumerator setStun(float speedModifier, float effectDuration)
+    public IEnumerator setStun(float effectDuration)
     {
-        if (!m_currentStatusEffects.Add(StatusEffectEnum.STUN)) yield break;
+        Debug.Log("Enemy stunned");
+        speed = 0.0f;
+
+        yield return StartCoroutine(statusTimer(effectDuration, () =>
+        {
+            Debug.Log("Enemy no longer stunned");
+            speed = _baseSpeed;
+        }));
+    }
+
+    public IEnumerator setPoison(float speedModifier, float damageAtTick, float effectDuration)
+    {
+        Debug.Log("Enemy poisoned");
         speed += speedModifier;
-        yield return new WaitForSeconds(effectDuration);
-        speed -= speedModifier;
-        m_currentStatusEffects.Remove(StatusEffectEnum.STUN);
+        this.healthDamageAtInterval += damageAtTick;
+
+        yield return StartCoroutine(statusTimer(effectDuration, () =>
+        {
+            Debug.Log("Enemy no longer poisoned");
+            this.healthDamageAtInterval -= damageAtTick;
+            speed -= speedModifier;
+        }));
     }
 
-    public IEnumerator setPoison(float healthDamageAtInterval, float effectDuration)
+    public IEnumerator setBurn(float damageAtTick, float effectDuration)
     {
-        if (!m_currentStatusEffects.Add(StatusEffectEnum.POISONED)) yield break;
-        this.healthDamageAtInterval += healthDamageAtInterval;
-        yield return new WaitForSeconds(effectDuration);
-        this.healthDamageAtInterval -= healthDamageAtInterval;
-        m_currentStatusEffects.Remove(StatusEffectEnum.POISONED);
-    }
+        Debug.Log("Enemy burning");
+        this.healthDamageAtInterval += damageAtTick;
 
-    public IEnumerator setBurn(float effectDuration)
-    {
-        if (!m_currentStatusEffects.Add(StatusEffectEnum.BURN)) yield break;
-        this.healthDamageAtInterval += healthDamageAtInterval;
-        yield return new WaitForSeconds(effectDuration);
-        this.healthDamageAtInterval -= healthDamageAtInterval;
-        m_currentStatusEffects.Remove(StatusEffectEnum.BURN);
+        yield return StartCoroutine(statusTimer(effectDuration, () =>
+        {
+            Debug.Log("Enemy no longer burning");
+            this.healthDamageAtInterval -= damageAtTick;
+        }));
     }
 
     public IEnumerator setHealing(float healthGainAtInterval, float effectDuration)
     {
-        if (!m_currentStatusEffects.Add(StatusEffectEnum.HEALING)) yield break;
+        Debug.Log("Enemy healing");
         this.healthGainAtInterval += healthGainAtInterval;
-        yield return new WaitForSeconds(effectDuration);
-        this.healthGainAtInterval -= healthGainAtInterval;
-        m_currentStatusEffects.Remove(StatusEffectEnum.HEALING);
-    }
 
-    [System.Serializable]
-    public enum StatusEffectEnum
-    {
-        FROZEN,
-        STUN,
-        SLOWED,
-        POISONED,
-        BURN,
-        HEALING
-    };
+        yield return StartCoroutine(statusTimer(effectDuration, () =>
+        {
+            Debug.Log("Enemy no longer healing"); 
+            this.healthGainAtInterval -= healthGainAtInterval;
+        })); 
+    }
 }
