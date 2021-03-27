@@ -5,19 +5,14 @@ using UnityEngine;
 public class BaseEnemyBehaviour : MonoBehaviour
 {
     private static readonly float _baseHealth = 10.0f;
-    private static readonly float _baseSpeed = 2.0f;
+    private static readonly float _baseSpeed = 1.0f;
     private static readonly int _baseArmor = 5;
 
     public EnemyPath path;
 
-    public float speed = 1.0f;
-
     private PathWaypoint m_CurrentWaypoint;
 
-    void Start()
-    {
-    }
-    public float health = 10.0f;
+    public float health = _baseHealth;
     public int armor = _baseArmor;
     public float speed = _baseSpeed;
     public float healthDamageAtInterval = 0.0f;
@@ -30,6 +25,11 @@ public class BaseEnemyBehaviour : MonoBehaviour
         if ((Physics.Raycast(transform.localPosition, -Vector3.up, out hit, Mathf.Infinity)))
         {
             transform.localPosition = hit.point;
+        }
+
+        if (path != null)
+        {
+            UpdatePathMovement();
         }
     }
 
@@ -137,12 +137,7 @@ public class BaseEnemyBehaviour : MonoBehaviour
         {
             Debug.Log("Enemy no longer healing"); 
             this.healthGainAtInterval -= healthGainAtInterval;
-        })); 
-
-        if (path != null)
-        {
-            UpdatePathMovement();
-        }
+        }));
     }
 
     private void UpdatePathMovement()
