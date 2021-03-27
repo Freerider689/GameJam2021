@@ -20,7 +20,7 @@ public class BaseEnemyBehaviour : MonoBehaviour
     void Update()
     {
         RaycastHit hit;
-        if ((Physics.Raycast(transform.position, -Vector3.up, out hit, Mathf.Infinity)))
+        if ((Physics.Raycast(transform.localPosition, -Vector3.up, out hit, Mathf.Infinity)))
         {
             transform.localPosition = hit.point;
         }
