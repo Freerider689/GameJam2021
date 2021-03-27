@@ -301,7 +301,7 @@ GameObject:
   - component: {fileID: 3691902163856688201}
   - component: {fileID: 3691902163856688200}
   m_Layer: 0
-  m_Name: MissileTower
+  m_Name: FastTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -341,6 +341,7 @@ MonoBehaviour:
   timeTillNextShot: 0
   enemyTag: Enemy
   projectilePrefab: {fileID: 1174624761408716537, guid: 9a680d80c5e491543bc6aa8eac0dfda6, type: 3}
+  projectileDamageType: 0
   canonOrigin: {fileID: 3691902164932029929}
 --- !u!1 &3691902164932029934
 GameObject:

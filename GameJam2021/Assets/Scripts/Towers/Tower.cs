@@ -4,13 +4,11 @@ using UnityEngine;
 
 public abstract class Tower : MonoBehaviour
 {
-    [HideInInspector]
-    public Transform _target;
+    [HideInInspector] public Transform _target;
     public float range;
     public float damage = 1.0f;
     public float fireRate;
-    [HideInInspector]
-    public float timeTillNextShot = 0f;
+    [HideInInspector] public float timeTillNextShot = 0f;
 
     public string enemyTag = "Enemy";
 
@@ -35,7 +33,7 @@ public abstract class Tower : MonoBehaviour
             }
         }
 
-        if(nearestEnemy != null && shortestDistance <= range)
+        if (nearestEnemy != null && shortestDistance <= range)
         {
             _target = nearestEnemy.transform;
         }
@@ -47,6 +45,15 @@ public abstract class Tower : MonoBehaviour
 
     private void Update()
     {
+        if (Physics.Raycast(transform.localPosition,
+            Vector3.down,
+            out var hit,
+            Mathf.Infinity))
+        {
+            float y = hit.point.y + (0.5f * transform.localScale.y);
+            transform.localPosition = new Vector3(transform.localPosition.x, y, transform.localPosition.z);
+        }
+
         if (_target == null)
             return;
 
