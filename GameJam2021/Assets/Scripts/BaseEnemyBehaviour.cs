@@ -48,8 +48,11 @@ public class BaseEnemyBehaviour : MonoBehaviour
         if (health <= 0)
         {
             Debug.Log("Mein Leben #_#");
+            var player = GameObject.FindWithTag("Player").gameObject.GetComponent<PlayerBase>();
+            
+            player.addMoney(this.valueForKill);
+
             Destroy(gameObject);
-            return;
         }
     }
 

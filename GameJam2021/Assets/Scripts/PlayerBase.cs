@@ -27,4 +27,9 @@ public class PlayerBase : MonoBehaviour
             }
         }
     }
+
+    public void addMoney(int amount)
+    {
+        money += amount;
+    }
 }
