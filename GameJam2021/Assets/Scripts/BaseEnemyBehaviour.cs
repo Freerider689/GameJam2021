@@ -1,15 +1,14 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 public class BaseEnemyBehaviour : MonoBehaviour
 {
+    private static readonly float _baseHealth = 10.0f;
     private static readonly float _baseSpeed = 2.0f;
     private static readonly int _baseArmor = 5;
 
-    public int health = 10;
+    public float health = 10.0f;
     public int armor = _baseArmor;
     public float speed = _baseSpeed;
     public float healthDamageAtInterval = 0.0f;
@@ -32,9 +31,17 @@ public class BaseEnemyBehaviour : MonoBehaviour
     }
 
 
-    public void registerHit()
+    public void registerHit(float damage)
     {
-        Debug.Log("Captain I'm hit!");
+        Debug.Log($"Captain I'm hit with damage {damage}! {health}/{10.0f}");
+        health -= damage;
+
+        if (health <= 0)
+        {
+            Debug.Log("Mein Leben #_#");
+            Destroy(gameObject);
+            return;
+        }
     }
 
     IEnumerator statusTimer(float time, Action callback)

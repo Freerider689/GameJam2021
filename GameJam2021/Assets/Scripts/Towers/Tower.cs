@@ -7,7 +7,7 @@ public abstract class Tower : MonoBehaviour
     [HideInInspector]
     public Transform _target;
     public float range;
-    public float damage;
+    public float damage = 1.0f;
     public float fireRate;
     [HideInInspector]
     public float timeTillNextShot = 0f;

@@ -7,9 +7,8 @@ public abstract class Projectile : MonoBehaviour
     private Transform _target;
 
     public float speed;
-    public float targetSpeedModifier = 0.0f;
-    public int targetArmorModifier = 0;
 
+    private float damage = 1.0f;
     private DamageTypeEnum damageType = DamageTypeEnum.NORMAL;
 
     public void Seek(Transform target)
@@ -45,6 +44,8 @@ public abstract class Projectile : MonoBehaviour
         {
             var myScript = _target.gameObject.GetComponent<BaseEnemyBehaviour>();
 
+            myScript.registerHit(damage);
+            
             switch (damageType)
             {
                 case DamageTypeEnum.ICE:
@@ -62,9 +63,6 @@ public abstract class Projectile : MonoBehaviour
                 case DamageTypeEnum.POISON:
                     StartCoroutine(myScript.setPoison(-1.0f, -5, 0.2f));
                     break;
-                default:
-                    myScript.registerHit();
-                    break;
             }
         }
 
@@ -72,10 +70,9 @@ public abstract class Projectile : MonoBehaviour
     }
 
 
-    public void setDamageType(DamageTypeEnum newDamageType)
-    {
-        this.damageType = newDamageType;
-    }
+    public void setDamageType(DamageTypeEnum newDamageType) => this.damageType = newDamageType;
+    public void setDamage(float newDamage) => this.damage = newDamage;
+
 
     [System.Serializable]
     public enum DamageTypeEnum

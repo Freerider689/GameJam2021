@@ -12,9 +12,10 @@ public class BaseTower : Tower
     public override void Attack()
     {
         Debug.Log("SHOOT SHOOT MOTHERFUCKER!");
-        GameObject projectileGameObject = (GameObject)Instantiate(projectilePrefab, canonOrigin.position, canonOrigin.rotation);
+        GameObject projectileGameObject = Instantiate(projectilePrefab, canonOrigin.position, canonOrigin.rotation);
         Projectile projectile = projectileGameObject.GetComponent<Bullet>();
         projectile.setDamageType(projectileDamageType);
+        projectile.setDamage(damage);
 
         if (projectile != null)
             projectile.Seek(_target);
