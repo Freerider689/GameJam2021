@@ -63,6 +63,7 @@ public class PlayerBase : MonoBehaviour
     void quitButtonClicked()
     {
         Debug.Log("Quit pressed");
+        Application.Quit(0);
     }
 
     void FixedUpdate()
@@ -95,7 +96,7 @@ public class PlayerBase : MonoBehaviour
         {
             Destroy(topLevelObject);
 
-            if (health > 0)
+            if (health > 1)
             {
                 health--;
                 Debug.Log($"O NO AN ENEMY TOUCHED YOUR BASE {health}/{_baseHealth}");
