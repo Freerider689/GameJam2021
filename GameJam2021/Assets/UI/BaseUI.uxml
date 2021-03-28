@@ -1,9 +1,19 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:VisualElement name="Root" style="align-items: stretch; justify-content: space-between; width: 100%; height: 100%;">
-        <ui:VisualElement />
+        <ui:VisualElement name="PlayerStats" style="left: 0; top: 0; right: 0; margin-left: 10px; margin-right: 10px; margin-top: 10px;">
+            <ui:Label text="Wave 1" display-tooltip-when-elided="true" name="WaveCounter" focusable="false" style="-unity-text-align: upper-right; font-size: 35px; color: rgb(0, 0, 0); -unity-font-style: bold; -unity-text-outline-width: 0; text-shadow: 0 1px 0.05px rgb(137, 134, 133); -unity-text-outline-color: rgb(0, 0, 0); -unity-font: resource(&apos;Images/Roboto-Regular&apos;); -unity-font-definition: resource(&apos;Fonts &amp; Materials/LiberationSans SDF&apos;);" />
+            <ui:Label text="100/100" display-tooltip-when-elided="true" name="Health" style="-unity-text-align: upper-right; font-size: 30px; color: rgb(135, 27, 0); -unity-font: resource(&apos;Images/Roboto-Regular&apos;); -unity-font-definition: resource(&apos;Fonts &amp; Materials/LiberationSans SDF&apos;); -unity-text-outline-width: 0; text-shadow: 0 0.5px 0.25px rgb(180, 46, 13);" />
+            <ui:Label text="50$" display-tooltip-when-elided="true" name="Money" style="-unity-text-align: upper-right; font-size: 25px; color: rgb(240, 255, 0); -unity-text-outline-width: 0.15px; text-shadow: 0 1px 0.25px rgb(255, 93, 0); -unity-font-style: bold; -unity-font: resource(&apos;Fonts/Inter/Inter-SemiBoldItalic&apos;); -unity-font-definition: resource(&apos;Fonts &amp; Materials/LiberationSans SDF&apos;);" />
+        </ui:VisualElement>
         <ui:VisualElement name="BuildMenu" style="opacity: 1; height: auto; justify-content: flex-start; flex-direction: row; overflow: hidden; bottom: auto; padding-bottom: 10px; padding-left: 10px; padding-right: 10px;">
             <ui:Button text="Simple Tower&#10; 10" display-tooltip-when-elided="true" name="Tower1" style="width: 100px; height: 100px; background-color: rgb(161, 0, 0); opacity: 1;" />
             <ui:Button text="Fast Tower&#10;20&#10;" display-tooltip-when-elided="true" name="Tower2" style="width: 100px; height: 100px; background-color: rgb(161, 0, 0); opacity: 1;" />
+            <ui:Button text="Ice Tower&#10;20&#10;" display-tooltip-when-elided="true" name="Tower3" style="width: 100px; height: 100px; background-color: rgb(161, 0, 0); opacity: 1;" />
+            <ui:Button text="Fire Tower&#10;20&#10;" display-tooltip-when-elided="true" name="Tower4" style="width: 100px; height: 100px; background-color: rgb(161, 0, 0); opacity: 1;" />
+            <ui:Button text="Poison Tower&#10;20&#10;" display-tooltip-when-elided="true" name="Tower5" style="width: 100px; height: 100px; background-color: rgb(161, 0, 0); opacity: 1;" />
+            <ui:Button text="Stun Tower&#10;20&#10;" display-tooltip-when-elided="true" name="Tower6" style="width: 100px; height: 100px; background-color: rgb(161, 0, 0); opacity: 1;" />
+            <ui:Button text="Slow Tower&#10;20&#10;" display-tooltip-when-elided="true" name="Tower7" style="width: 100px; height: 100px; background-color: rgb(161, 0, 0); opacity: 1;" />
         </ui:VisualElement>
     </ui:VisualElement>
+    <ui:Label text="Wave 1" display-tooltip-when-elided="true" name="WaveCounter" style="-unity-text-align: upper-right;" />
 </ui:UXML>
