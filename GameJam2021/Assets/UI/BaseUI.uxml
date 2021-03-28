@@ -15,11 +15,11 @@
             <ui:Button text="Slow Tower&#10;20&#10;" display-tooltip-when-elided="true" name="Tower7" style="width: 100px; height: 100px; background-color: rgb(161, 0, 0); opacity: 1;" />
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="GameOver" style="visibility: visible; display: flex; position: absolute; left: auto; width: 100%; height: 100%; opacity: 1;">
-        <ui:Label text="GAME OVER" display-tooltip-when-elided="true" name="EndGameResult" style="justify-content: center; align-items: center; -unity-text-align: upper-center; height: 100%; font-size: 150px; background-color: rgb(219, 40, 40); -unity-background-image-tint-color: rgb(255, 255, 255); opacity: 1; padding-top: 100px;">
-            <ui:VisualElement style="flex-direction: row;">
-                <ui:Button text="Retry" display-tooltip-when-elided="true" name="Retry" style="justify-content: flex-start; flex-direction: column; -unity-text-align: middle-center; white-space: normal; width: 75px; height: 40px;" />
-                <ui:Button text="Quit" display-tooltip-when-elided="true" name="Quit" style="-unity-text-align: middle-center; width: 75px; height: 40px;" />
+    <ui:VisualElement name="GameOver" style="visibility: visible; display: flex; position: absolute; left: auto; width: 100%; height: 100%; opacity: 0.84;">
+        <ui:Label text="GAME OVER" display-tooltip-when-elided="true" name="EndGameResult" style="justify-content: center; align-items: center; -unity-text-align: upper-center; height: 100%; font-size: 100%; background-color: rgb(219, 40, 40); -unity-background-image-tint-color: rgb(255, 255, 255); opacity: 1; padding-top: 20%;">
+            <ui:VisualElement style="flex-direction: row; color: rgba(0, 0, 0, 255); -unity-text-outline-width: 1px; font-size: 100%; justify-content: center; align-items: center;">
+                <ui:Button text="Retry" display-tooltip-when-elided="true" name="Retry" style="justify-content: flex-start; flex-direction: column; -unity-text-align: middle-center; white-space: normal; width: 100%; height: 100%; font-size: 50%; align-items: center;" />
+                <ui:Button text="Quit" display-tooltip-when-elided="true" name="Quit" style="-unity-text-align: middle-center; width: 100%; height: 100%; font-size: 50%;" />
             </ui:VisualElement>
         </ui:Label>
     </ui:VisualElement>
