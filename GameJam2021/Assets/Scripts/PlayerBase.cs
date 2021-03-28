@@ -42,7 +42,7 @@ public class PlayerBase : MonoBehaviour
         UpdateLabels();
     }
 
-    void UpdateLabels()
+    public void UpdateLabels()
     {
         waveCounterLabel.text = $"Wave  {level}";
         healthLabel.text = $"{health}/{_baseHealth}";
@@ -81,6 +81,17 @@ public class PlayerBase : MonoBehaviour
 
     public void addMoney(int amount)
     {
-        money += amount;
+        if (amount > 0)
+        {
+            money += amount;
+        }
+    }
+
+    public void removeMoney(int amount)
+    {
+        if (amount > 0)
+        {
+            money -= amount;
+        }
     }
 }

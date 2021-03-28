@@ -7990,6 +7990,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80013c436cf6c540a1a02745e39e81f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1273847298}
   uIDocument: {fileID: 1553710414}
   tower1Prefab: {fileID: 8797548622452727212, guid: c5b3425623c625d48a71798ff7b4cb0d, type: 3}
   tower2Prefab: {fileID: 3691902163856688206, guid: aba9df8060c5e344b8043c7a378e1a1b, type: 3}

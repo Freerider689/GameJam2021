@@ -15,8 +15,12 @@ public class TowerSelection : MonoBehaviour
     private static readonly string BUTTON_TOWER_5 = "Tower5";
     private static readonly string BUTTON_TOWER_6 = "Tower6";
     private static readonly string BUTTON_TOWER_7 = "Tower7";
+    private static readonly string LABEL_MONEY = "Money";
+
+    public PlayerBase player;
 
     public UnityEngine.UIElements.UIDocument uIDocument;
+    public UnityEngine.UIElements.Label moneyLabel;
     public UnityEngine.UIElements.Button buttonSelectTower1;
     public UnityEngine.UIElements.Button buttonSelectTower2;
     public UnityEngine.UIElements.Button buttonSelectTower3;
@@ -72,6 +76,10 @@ public class TowerSelection : MonoBehaviour
             {
                 buttonSelectTower7 = (UnityEngine.UIElements.Button) elementsInDOM[i];
             }
+            else if (LABEL_MONEY == elementsInDOM[i].name)
+            {
+                moneyLabel = (UnityEngine.UIElements.Label) elementsInDOM[i];
+            }
         }
 
         buttonSelectTower1.clicked += ButtonSelectTower1Clicked;
@@ -94,60 +102,58 @@ public class TowerSelection : MonoBehaviour
         }
     }
 
+    private void selectTower(GameObject towerPrefab)
+    {
+        var towerCost = towerPrefab.GetComponent<Tower>().cost;
+        if (player.money >= towerCost)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            selectedGameObject = Instantiate(towerPrefab, ray.origin, Quaternion.identity);
+            dragging = true;
+        }
+    }
+
     private void ButtonSelectTower1Clicked()
     {
         Debug.Log("Tower 1 selected");
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        selectedGameObject = Instantiate(tower1Prefab, ray.origin, Quaternion.identity);
-        dragging = true;
+        selectTower(tower1Prefab);
     }
+
 
     private void ButtonSelectTower2Clicked()
     {
         Debug.Log("Tower 2 selected");
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        selectedGameObject = Instantiate(tower2Prefab, ray.origin, Quaternion.identity);
-        dragging = true;
+        selectTower(tower2Prefab);
     }
 
     private void ButtonSelectTower3Clicked()
     {
         Debug.Log("Tower 3 selected");
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        selectedGameObject = Instantiate(tower3Prefab, ray.origin, Quaternion.identity);
-        dragging = true;
+        selectTower(tower3Prefab);
     }
 
     private void ButtonSelectTower4Clicked()
     {
         Debug.Log("Tower 4 selected");
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        selectedGameObject = Instantiate(tower4Prefab, ray.origin, Quaternion.identity);
-        dragging = true;
+        selectTower(tower4Prefab);
     }
 
     private void ButtonSelectTower5Clicked()
     {
         Debug.Log("Tower 5 selected");
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        selectedGameObject = Instantiate(tower5Prefab, ray.origin, Quaternion.identity);
-        dragging = true;
+        selectTower(tower5Prefab);
     }
 
     private void ButtonSelectTower6Clicked()
     {
         Debug.Log("Tower 6 selected");
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        selectedGameObject = Instantiate(tower6Prefab, ray.origin, Quaternion.identity);
-        dragging = true;
+        selectTower(tower6Prefab);
     }
 
     private void ButtonSelectTower7Clicked()
     {
         Debug.Log("Tower 7 selected");
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        selectedGameObject = Instantiate(tower7Prefab, ray.origin, Quaternion.identity);
-        dragging = true;
+        selectTower(tower7Prefab);
     }
 
     private void releaseSelection()
@@ -170,11 +176,14 @@ public class TowerSelection : MonoBehaviour
                 selectedGameObject.transform.position =
                     new Vector3(startDist.x + rayPoint.x, y, startDist.z + rayPoint.z);
             }
+
+            if (Input.GetMouseButton(0))
+            {
+                player.removeMoney(selectedGameObject.GetComponent<Tower>().cost);
+                releaseSelection();
+            }
         }
 
-        if (Input.GetMouseButton(0))
-        {
-            releaseSelection();
-        }
+
     }
 }

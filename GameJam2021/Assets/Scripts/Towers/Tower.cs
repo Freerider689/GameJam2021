@@ -8,6 +8,7 @@ public abstract class Tower : MonoBehaviour
     public float range;
     public float damage = 1.0f;
     public float fireRate;
+    public int cost = 10;
     [HideInInspector] public float timeTillNextShot = 0f;
 
     public string enemyTag = "Enemy";
