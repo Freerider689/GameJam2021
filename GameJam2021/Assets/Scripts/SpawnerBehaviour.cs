@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnerBehaviour : MonoBehaviour
 {
     public float delayAndSpawnRate = 2.0f;
-    public float timeUntilSpawnRateIncrease = 30.0f;
+    public float timeUntilSpawnRateIncreases = 30.0f;
 
     public Color gizmosColor = Color.blue;
     public bool alwaysDrawGizmos = true;
@@ -31,7 +31,7 @@ public class SpawnerBehaviour : MonoBehaviour
 
     IEnumerator SpawnObject(float firstDelay)
     {
-        float spawnRateCountdown = timeUntilSpawnRateIncrease;
+        float spawnRateCountdown = timeUntilSpawnRateIncreases;
         float spawnCountdown = firstDelay;
 
         while (true)
@@ -46,10 +46,10 @@ public class SpawnerBehaviour : MonoBehaviour
                 SpawnRandomEnemyAtPosition(transform.localPosition);
             }
 
-            if (spawnRateCountdown < 0 && delayAndSpawnRate > 1)
+            if (spawnRateCountdown <= 0 && (delayAndSpawnRate - 0.01f) > 0)
             {
-                spawnRateCountdown += timeUntilSpawnRateIncrease;
-                delayAndSpawnRate -= 0.1f;
+                spawnRateCountdown += timeUntilSpawnRateIncreases;
+                delayAndSpawnRate -= 0.01f;
             }
         }
     }
