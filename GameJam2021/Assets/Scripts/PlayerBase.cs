@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class PlayerBase : MonoBehaviour
 {
-    private static readonly int _baseHealth = 1_000;
+    private static int _baseHealth;
 
     public UnityEngine.UIElements.UIDocument uIDocument;
     public UnityEngine.UIElements.Label waveCounterLabel;
     public UnityEngine.UIElements.Label healthLabel;
     public UnityEngine.UIElements.Label moneyLabel;
+    public UnityEngine.UIElements.VisualElement gameOverLabel;
+    public UnityEngine.UIElements.Button retryButton;
+    public UnityEngine.UIElements.Button quitButton;
     public int health = _baseHealth;
     public int money = 50;
     public int level = 1;
 
     void Start()
     {
+        _baseHealth = health;
         var elementsInDOM = new List<UnityEngine.UIElements.VisualElement>();
         this.getAllContainedElements(uIDocument.rootVisualElement, ref elementsInDOM);
 
@@ -33,8 +37,32 @@ public class PlayerBase : MonoBehaviour
             {
                 moneyLabel = (UnityEngine.UIElements.Label) elementsInDOM[i];
             }
+            else if ("GameOver" == elementsInDOM[i].name)
+            {
+                gameOverLabel = (UnityEngine.UIElements.VisualElement) elementsInDOM[i];
+                gameOverLabel.visible = false;
+            }
+            else if ("Retry" == elementsInDOM[i].name)
+            {
+                retryButton = (UnityEngine.UIElements.Button) elementsInDOM[i];
+            }
+            else if ("Quit" == elementsInDOM[i].name)
+            {
+                quitButton = (UnityEngine.UIElements.Button) elementsInDOM[i];
+            }
         }
 
+        retryButton.clicked += retryButtonClicked;
+        quitButton.clicked += quitButtonClicked;
+    }
+
+    void retryButtonClicked()
+    {
+        Debug.Log("Retry pressed");
+    }
+    void quitButtonClicked()
+    {
+        Debug.Log("Quit pressed");
     }
 
     void FixedUpdate()
@@ -75,6 +103,8 @@ public class PlayerBase : MonoBehaviour
             else
             {
                 Debug.Log("GAME OVER, get lost noob!");
+                GameUtils.PauseGame();
+                gameOverLabel.visible = true;
             }
         }
     }

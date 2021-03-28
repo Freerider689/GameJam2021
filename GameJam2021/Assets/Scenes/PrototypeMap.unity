@@ -7040,7 +7040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uIDocument: {fileID: 1553710414}
-  health: 1000
+  health: 10
   money: 50
   level: 1
 --- !u!1 &1317990051
